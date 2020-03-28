@@ -5,51 +5,55 @@ var opt2=document.getElementById("option2");
 var opt3=document.getElementById("option3");
 var opt4=document.getElementById("option4");
 var res=document.getElementById("result");
-var nextbutton= document.getElementById("next");
+var nextButton= document.getElementById("next");
 var q=document.getElementById('quit');
 
-var tques=preguntas.length;
-var score=0;
-var quesindex=0;
-function quit()
-{         
-	      quiz.style.display='none';
-          result.style.display='';
-          var f=score/tques;
-          result.textContent="SCORE ="+f*100;
-          q.style.display="none";
-}
-function give_ques(quesindex) 
-{
-	ques.textContent=quesindex+1+". "+preguntas[quesindex][0];
-	opt1.textContent=preguntas[quesindex][1];
-	opt2.textContent=preguntas[quesindex][2];
-	opt3.textContent=preguntas[quesindex][3];
-	opt4.textContent=preguntas[quesindex][4];
-	 return;// body...
-};
-give_ques(0);
-function nextques()
-{
-	var selected_ans= document.querySelector('input[type=radio]:checked');
-	if(!selected_ans)
-		{alert("SELECT AN OPTION");return;}
+var totalPreguntas=preguntas.length;
+var puntuacion=0;
+var indexPregunta=0;
 
-	if(selected_ans.value==preguntas[quesindex][5])
-		{score=score+1;}
-	selected_ans.checked=false;
-	     quesindex++;
-	     if(quesindex==tques-1)
+function quit() {         
+	quiz.style.display='none';
+	result.style.display='';
+	var f=puntuacion/totalPreguntas;
+	result.textContent="Puntuación ="+f*100;
+	q.style.display="none";
+}
+
+function give_ques(indexPregunta) {
+	ques.textContent=indexPregunta+1+". "+preguntas[indexPregunta][0];
+	opt1.textContent=preguntas[indexPregunta][1];
+	opt2.textContent=preguntas[indexPregunta][2];
+	opt3.textContent=preguntas[indexPregunta][3];
+	opt4.textContent=preguntas[indexPregunta][4];
+	return;// body...
+};
+
+give_ques(0);
+
+function nextques() {
+	var resSeleccionada= document.querySelector('input[type=radio]:checked');
+	if(!resSeleccionada){
+		alert("SELECT AN OPTION");
+		return;
+	}
+
+	if(resSeleccionada.value==preguntas[indexPregunta][5]){
+		puntuacion+=1;
+	}
+	
+	resSeleccionada.checked=false;
+	indexPregunta++;
+	     if(indexPregunta==totalPreguntas-1)
 	     	nextbutton.textContent="Finish";
-	     var f=score/tques;
-	     if(quesindex==tques)
-	     {
-	     q.style.display='none';
-          quiz.style.display='none';
-          result.style.display='';
-          result.textContent="SCORED:"+(f*100).toFixed(2)+"%";
+	     var f=puntuacion/totalPreguntas;
+	     if (indexPregunta==totalPreguntas) {
+			q.style.display='none';
+			quiz.style.display='none';
+			result.style.display='';
+			result.textContent="Puntuación:"+(f*100).toFixed(2)+"%";
             return;
 	     }
-        give_ques(quesindex);
+        give_ques(indexPregunta);
 
 }
